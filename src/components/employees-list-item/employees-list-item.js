@@ -33,8 +33,8 @@ class EmployeesListItem extends Component{
         }
 
         return (
-            <li onClick={this.onRise} className={classNames}>
-                <span className="list-group-item-label">{name}</span>
+            <li className={classNames}>
+                <span onClick={this.onRise} className="list-group-item-label">{name}</span>
                 <input type="text" className="list-group-item-input" defaultValue="1000$" value={salary + "$"}/>
                 <div className='d-flex justify-content-center align-items-center'>
                     <button type="button"
