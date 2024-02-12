@@ -6,7 +6,8 @@ class EmployeesAddForm extends Component {
         super(props);
         this.state = {
             name: '',
-            salary: ''
+            salary: '',
+            warning: ''
         }
     }
 
@@ -18,15 +19,29 @@ class EmployeesAddForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        
+        this.setState({warning: ''});
+
+        if (this.state.name.length < 3){
+            this.setState({warning: 'Имя сотрудника должно содержать не менее 3-х символов'});
+            return;
+        }
+
+        if(!this.state.salary){
+            this.setState({warning: 'Поле зарплаты не может быть пустым'});
+            return;
+        }
+
         this.props.onAdd(this.state.name, this.state.salary);
         this.setState({
             name: '',
-            salary: ''
+            salary: '',
+            warning: ''
         })
     }
 
     render(){
-        const {name, salary} = this.state;
+        const {name, salary, warning} = this.state;
 
         return (
             <div className="app-add-form">
@@ -50,6 +65,7 @@ class EmployeesAddForm extends Component {
                     <button type="submit"
                             className="btn btn-outline-light">Добавить</button>
                 </form>
+                <p className="app-add-form__warning">{warning}</p>
             </div>
         );
     }
