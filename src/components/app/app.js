@@ -13,9 +13,9 @@ class App extends Component {
         super(props);
         this.state = {
             data : [
-                {name: 'John C.', salary: 700, increase: false, id: 0},
-                {name: 'Alex M.', salary: 3100, increase: true, id: 1},
-                {name: 'Carl W.', salary: 5200, increase: false, id: 2}
+                {name: 'John C.', salary: 700, increase: false, rise: false, id: 0},
+                {name: 'Alex M.', salary: 3100, increase: true, rise: false, id: 1},
+                {name: 'Carl W.', salary: 5200, increase: false, rise: false, id: 2}
             ]
         }
         
@@ -35,12 +35,41 @@ class App extends Component {
             name,
             salary,
             increase: false,
+            rise: false,
             id: ++this.maxId
         }
         this.setState(({data}) => {
             const newArr = [...data, newItem];
             return {
                 data: newArr
+            }
+        })
+    }
+
+    onToggleIncrease = (id) => {
+        this.setState(({data}) => {
+            return {
+                data: data.map(item => {
+                    if (item.id === id){
+                        return {...item, increase: !item.increase}
+                    };
+
+                    return item;
+                })
+            }
+        })
+    }
+
+    onToggleRise = (id) => {
+        this.setState(({data}) => {
+            return {
+                data: data.map(item => {
+                    if (item.id === id) {
+                        return {...item, rise: !item.rise}
+                    }
+                    
+                    return item;
+                })
             }
         })
     }
@@ -59,7 +88,9 @@ class App extends Component {
     
                 <EmployeesList 
                 data={data}
-                onDelete={this.deleteItem}/>
+                onDelete={this.deleteItem}
+                onToggleIncrease={this.onToggleIncrease}
+                onToggleRise={this.onToggleRise}/>
     
                 <EmployeesAddForm
                 onAdd={this.addItem}/>
