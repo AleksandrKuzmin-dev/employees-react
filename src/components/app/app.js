@@ -109,11 +109,28 @@ class App extends Component {
         this.setState({filter: filterName})
     }
 
+    onUpdateSalary = (id, value) => {
+        this.setState(({data}) => {
+            return {
+                data: data.map(item => {
+                    if (item.id === id) {
+                        if(value === '$'){
+                            return {...item, salary: 0}
+                        }
+
+                        return {...item, salary: value.replace('$', '')}
+                    } else {
+                        return item;
+                    }
+                })
+            }
+        })
+    }
+
     render(){
         const {data, term, filter} = this.state;
         const totalValueEmployees = this.state.data.length;
         const increasedEmployees = this.state.data.filter(item => item.increase).length;
-        /* const visibleData = this.searchEmployees(data, term); */
         const visibleData = this.searchEmployees(this.filterEmployees(data,filter), term)
 
         return (
@@ -133,7 +150,8 @@ class App extends Component {
                 data={visibleData}
                 onDelete={this.deleteItem}
                 onToggleIncrease={this.onToggleIncrease}
-                onToggleRise={this.onToggleRise}/>
+                onToggleRise={this.onToggleRise}
+                onUpdateSalary={this.onUpdateSalary}/>
     
                 <EmployeesAddForm
                 onAdd={this.addItem}/>

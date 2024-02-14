@@ -2,7 +2,7 @@ import './employees-list-item.css';
 
 const EmployeesListItem = (props) => {
     
-    const {name, salary, increase, rise, onDelete, onToggleIncrease, onToggleRise} = props;
+    const {id, name, salary, increase, rise, onDelete, onToggleIncrease, onToggleRise, onUpdateSalary} = props;
 
     let classNames = "list-group-item d-flex justify-content-between";
 
@@ -14,10 +14,14 @@ const EmployeesListItem = (props) => {
         classNames += " like";
     }
 
+
     return (
         <li className={classNames}>
             <span onClick={onToggleRise} className="list-group-item-label">{name}</span>
-            <input type="text" className="list-group-item-input" value={salary + "$"}/>
+            <input type="text" 
+                className="list-group-item-input" 
+                value={salary + "$"}
+                onChange={(e) => onUpdateSalary(id, e.target.value)}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                     className="btn-cookie btn-sm "
